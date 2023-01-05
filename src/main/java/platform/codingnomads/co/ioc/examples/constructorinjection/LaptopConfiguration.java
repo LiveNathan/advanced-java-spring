@@ -22,4 +22,9 @@ public class LaptopConfiguration {
     public HardDrive hardDrive() {
         return new HardDrive("Semens", "x123", 1000);
     }
+
+    @Bean
+    public Monitor monitor() {
+        return new Monitor("brand", "model", 11);
+    }
 }

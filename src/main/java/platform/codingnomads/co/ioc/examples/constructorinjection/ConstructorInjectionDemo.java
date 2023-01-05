@@ -11,5 +11,6 @@ public class ConstructorInjectionDemo {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(LaptopConfiguration.class);
         Laptop laptop = ctx.getBean(Laptop.class);
         System.out.println(laptop.printLaptopConfiguration());
+        System.out.println(laptop.toString());
     }
 }
