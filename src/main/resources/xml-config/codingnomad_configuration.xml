@@ -18,5 +18,9 @@
         <property name="name" value="OpenJDK"/>
         <property name="version" value="11"/>
     </bean>
+    <bean id="mouse" class="platform.codingnomads.co.corespring.examples.application_context.xml.Mouse">
+        <property name="brand" value="Kensington"/>
+        <property name="model" value="track"/>
+    </bean>
 
 </beans>

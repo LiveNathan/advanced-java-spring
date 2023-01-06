@@ -15,6 +15,7 @@ public class CodingNomad {
     private final Framework framework;
     private final Computer computer;
     private Desk desk;
+    private final Mouse mouse;
 
     public String createAwesomeSoftware() {
         return MessageFormat
@@ -29,7 +30,9 @@ public class CodingNomad {
                         computer.getBrand(),
                         computer.getModel(),
                         desk.getBrand(),
-                        desk.getModel()
+                        desk.getModel(),
+                        mouse.getBrand(),
+                        mouse.getModel()
                 );
     }
     // Setter injection
