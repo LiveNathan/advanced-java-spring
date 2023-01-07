@@ -9,6 +9,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class PrimaryAnnotationDemo {
     public static void main(String[] args) {
         final ConfigurableApplicationContext ctx = SpringApplication.run(PrimaryAnnotationDemo.class);
+        VideoCard videoCard = ctx.getBean(VideoCard.class);
+        String className = videoCard.getClass().getSimpleName();
+        System.out.println("\n*** Class name = " + className + " ***\n");
+
         ctx.close();
     }
 }
