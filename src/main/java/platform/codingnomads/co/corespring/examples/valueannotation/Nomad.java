@@ -36,6 +36,11 @@ public class Nomad {
     @Value("#{${database.values}}")
     private Map<String, String> databaseValues;
 
+    @Value("${nomad.country}")
+    private String country;
+    @Value("${nomad.city}")
+    private String city;
+
     public String nomadIdentity() {
         return name.concat(" ").concat(age.toString());
     }
@@ -45,7 +50,7 @@ public class Nomad {
     }
 
     public String output() {
-        return "Spring Developer is building awesome software using: ".concat(jdk).concat(" , ").concat(framework).concat(" and ").concat(ide);
+        return "Spring Developer is building awesome software using: ".concat(jdk).concat(", ").concat(framework).concat(" and ").concat(ide).concat(" in ").concat(city).concat(", ").concat(country);
     }
 
     public List<String> getWorkingDays() {
