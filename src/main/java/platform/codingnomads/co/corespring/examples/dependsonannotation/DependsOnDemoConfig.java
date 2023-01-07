@@ -17,4 +17,10 @@ public class DependsOnDemoConfig {
     public JDK jdk() {
         return new JDK();
     }
+
+    @Bean
+    @DependsOn(value = "jdk")
+    public Bread bread() {
+        return new Bread();
+    }
 }
