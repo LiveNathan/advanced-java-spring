@@ -8,4 +8,7 @@ public class DesktopComputer {
 
     @Autowired
     private VideoCard videoCard;
+
+    @Autowired
+    private Children child;
 }
