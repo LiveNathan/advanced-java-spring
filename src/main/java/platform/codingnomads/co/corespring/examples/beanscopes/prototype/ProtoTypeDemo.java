@@ -16,6 +16,8 @@ public class ProtoTypeDemo {
         SpringBean springBean2 = ctx.getBean(SpringBean.class);
         System.out.println("Hash code: " + springBean2.hashCode());
 
+        // create two objects from this bean. Print the hash code of each to the console.
+
         ctx.close();
     }
 }
