@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan
-public class BeanLifeCycleConfig {
+public class BeanLifeCycleConfig implements BeanNameAware {
 
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("something quirky: ".concat(name));
+    }
 }
