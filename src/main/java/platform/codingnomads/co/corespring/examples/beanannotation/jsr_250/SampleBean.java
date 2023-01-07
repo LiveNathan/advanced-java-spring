@@ -19,4 +19,13 @@ public class SampleBean {
         System.out.println("time to @PreDestroy and head home..");
     }
 
+    @PreDestroy
+    public void game() {
+        System.out.println("Do this before the bean is destroyed, please.");
+    }
+    @PostConstruct
+    public void pitch() {
+        System.out.println("Do this after bean construction.");
+    }
+
 }
