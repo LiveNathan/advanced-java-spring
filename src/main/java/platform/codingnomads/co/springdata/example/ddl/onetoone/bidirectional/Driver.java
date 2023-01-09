@@ -29,4 +29,13 @@ public class Driver {
             cascade = CascadeType.PERSIST
     )
     private Car car;
+    @OneToOne(
+            //a sponsor will only be retrieved from the database when it is explicitly accessed
+            fetch = FetchType.LAZY,
+            //you must specify a sponsor before you save the Driver
+            optional = false,
+            //All save/persist actions will be propagated through to the sponsor.
+            cascade = CascadeType.PERSIST
+    )
+    private Sponsor sponsor;
 }
