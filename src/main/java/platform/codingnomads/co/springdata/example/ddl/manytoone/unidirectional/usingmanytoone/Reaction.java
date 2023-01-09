@@ -15,8 +15,8 @@ public class Reaction {
     @Column(nullable = false, updatable = false)
     private String username;
 
-    @Column(nullable = false)
-    private String potato;
+    @Column(nullable = false, length = 7)
+    private char potato;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Post post;
