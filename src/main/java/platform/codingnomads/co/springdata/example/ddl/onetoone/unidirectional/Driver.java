@@ -20,4 +20,6 @@ public class Driver {
 
     @OneToOne
     private Car car;
+    @OneToOne
+    private Sponsor sponsor;
 }
