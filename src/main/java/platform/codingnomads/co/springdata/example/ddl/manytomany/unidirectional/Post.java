@@ -35,4 +35,6 @@ public class Post {
     //set up many-to-many relationship with the tag class
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Location> location;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Like> likes;
 }
