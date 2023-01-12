@@ -67,10 +67,7 @@ public class JpaRepoDemo implements CommandLineRunner {
 
         // find CokeZero
         System.out.println("FIND COKE ZERO");
-        Example<SoftDrink> example = Example.of(SoftDrink.builder().name("Coke Zero").build(), ExampleMatcher.matchingAny());
-        List<SoftDrink> foundCokeZero = softDrinkRepo.findAll(example);
-        System.out.println(foundCokeZero);
-//        softDrinkRepo.findAll(example).forEach(System.out::println);
+        // Couldn't figure this one out!!
 
         //create page request to paginate through these 3 soft drinks. note that the first page is indicated using a 0
         PageRequest pageRequest = PageRequest.of(0, 2);
