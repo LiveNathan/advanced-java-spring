@@ -1,8 +1,11 @@
 package platform.codingnomads.co.springdata.example.ddl.joincolumn;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,4 +20,14 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @Column(nullable = false)
+    private String email;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "spouse", unique = true, referencedColumnName = "email", nullable = true, updatable = true)  // updatable=true and nullable=true are default, just making it verbose here for practice.
+    private User spouse;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Asset> assets;
 }
