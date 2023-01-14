@@ -15,12 +15,17 @@ public class QueryApplication implements CommandLineRunner{
     @Autowired
     PlantService plantService;
 
+    @Autowired
+    SoilTypeService soilTypeService;
+
     @Override
     public void run(String... args) throws Exception {
 
         plantService.saveStuff();
-
         plantService.getStuff();
+        soilTypeService.getSoil();
+
+//        plantService.plantRepo.deleteAllInBatch();
 
     }
 }
