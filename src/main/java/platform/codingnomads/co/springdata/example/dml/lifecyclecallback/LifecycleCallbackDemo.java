@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class LifecycleCallbackDemo {
 
@@ -16,7 +18,10 @@ public class LifecycleCallbackDemo {
     public CommandLineRunner runStuff(PrintEntityRepository printEntityRepository) {
         return (args) -> {
             // put your logic here
-
+            PrintEntity printEntity = new PrintEntity();
+            printEntity = printEntityRepository.save(printEntity);
+            List<PrintEntity> printEntities = (List<PrintEntity>) printEntityRepository.findAll();
+            printEntityRepository.deleteAll();
         };
     }
 }
