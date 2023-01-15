@@ -6,10 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "points")
-@Getter
-@Setter
 @NoArgsConstructor
-@ToString
+@Data
 public class Point {
 
     @Id

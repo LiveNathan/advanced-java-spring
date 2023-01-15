@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import platform.codingnomads.co.springdata.example.dml.transactional.services.PointService;
 
-import java.io.IOException;
-
 @SpringBootApplication
 public class TransactionalApplication implements CommandLineRunner {
 
@@ -23,7 +21,7 @@ public class TransactionalApplication implements CommandLineRunner {
 
         //@Transactional I
 
-        pointService.foo();
+//        pointService.foo();
 //        pointService.doSomeWork();
 
         //@Transactional II
@@ -34,16 +32,21 @@ public class TransactionalApplication implements CommandLineRunner {
 //        System.out.println(pointService.getPointById(1L).toString());
 //        pointService.noExceptionExpected();
 
-        try {
-            pointService.rollbackFor();
-        } catch (IOException e) {
-            //do nothing... move on
-        }
+        // @Transactional Nathan
+//        pointService.dirtyRead();
 
-        try {
-            pointService.noRollbackFor();
-        } catch (InterruptedException e) {
-            //do nothing... move on
-        }
+
+
+//        try {
+//            pointService.rollbackFor();
+//        } catch (IOException e) {
+//            //do nothing... move on
+//        }
+//
+//        try {
+//            pointService.noRollbackFor();
+//        } catch (InterruptedException e) {
+//            //do nothing... move on
+//        }
     }
 }

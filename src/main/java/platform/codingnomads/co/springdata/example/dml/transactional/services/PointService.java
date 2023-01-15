@@ -20,10 +20,10 @@ public class PointService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void doSomeWork() {
-        Point p = new Point(1,1);
+        Point p = new Point(1, 1);
         repo.save(p);
 
-        p = new Point(2,2);
+        p = new Point(2, 2);
         repo.save(p);
 
         /*
@@ -42,7 +42,7 @@ public class PointService {
     @Transactional(timeout = 5)
     public void savePoint() {
         //create new point (1,1)
-        Point p = new Point(1,1);
+        Point p = new Point(1, 1);
 
         //save new point
         repo.save(p);
@@ -50,14 +50,14 @@ public class PointService {
 
     @Transactional(timeout = 5)
     public void timeOutAfter5() {
-        Point p = new Point(2,2);
+        Point p = new Point(2, 2);
         repo.save(p);
     }
 
     @Transactional(timeout = 1)
     public void triggerTimeout() throws InterruptedException {
         Thread.sleep(950);
-        Point p = new Point(1,1);
+        Point p = new Point(1, 1);
         repo.save(p);
     }
 
@@ -86,12 +86,29 @@ public class PointService {
     }
 
     @Transactional(noRollbackFor = InterruptedException.class)
-    public void noRollbackFor() throws InterruptedException{
+    public void noRollbackFor() throws InterruptedException {
         Point p = repo.getOne(2L);
         p.setX(4);
         p.setX(20);
         repo.save(p);
         throw new InterruptedException();
         //changes still commit
+    }
+
+    // @Transactional Nathan
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    public void dirtyRead() {
+        Point p1 = new Point(1, 1);
+        repo.save(p1);
+        p1 = new Point(2, 2);  // Change some data
+        Point p2 = repo.getReferenceById(1L);  // Dirty read
+        repo.save(p1);  // Update
+    }
+
+    @Transactional(readOnly = true)
+    public double distance() {
+        Point p1 = repo.getReferenceById(1L);
+        Point p2 = repo.getReferenceById(2L);
+        return Math.sqrt(Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2));
     }
 }
