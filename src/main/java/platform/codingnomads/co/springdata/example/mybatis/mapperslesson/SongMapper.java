@@ -24,7 +24,7 @@ public interface SongMapper {
     ArrayList<Song> getSongsByName(String name);
 
     // Get song names like
-    @Select("SELECT * FROM mybatis.songs WHERE name LIKE '%#{pattern}%'")
+    @Select("SELECT * FROM mybatis.songs WHERE name LIKE '%' #{pattern} '%';")
     ArrayList<Song> getSongsWithNameLike(String pattern);
 
     @Select("SELECT * " +
