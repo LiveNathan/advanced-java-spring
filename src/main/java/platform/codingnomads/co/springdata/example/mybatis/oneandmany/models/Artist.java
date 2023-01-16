@@ -4,11 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-@ToString(exclude = "songs")
+@ToString(exclude = "albums")
 public class Artist {
 
     private Long id;
@@ -17,5 +17,5 @@ public class Artist {
 
     private String bio;
 
-    private ArrayList<Song> songs;
+    private List<Album> albums;
 }

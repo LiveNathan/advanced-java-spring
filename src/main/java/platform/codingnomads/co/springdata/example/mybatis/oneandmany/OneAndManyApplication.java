@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.ArtistMapper;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper;
+import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Album;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Artist;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Song;
 
@@ -42,7 +43,7 @@ public class OneAndManyApplication {
 
             Song song1 = new Song();
             song1.setName("Minnesota, WI");
-            song1.setAlbumName("Bon Iver");
+            song1.setAlbum("Bon Iver");
             song1.setArtist(artist1);
             song1.setSongLength(232);
             artist1.setSongs(new ArrayList<>(Collections.singletonList(song1)));

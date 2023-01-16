@@ -2,29 +2,20 @@ package platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
+import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Album;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Artist;
 
 import java.util.ArrayList;
 
 @Mapper
-public interface ArtistMapper {
-
-    @Insert("INSERT INTO mybatis.artists (name, bio) VALUES (#{name}, #{bio});")
+public interface AlbumMapper {
+    @Insert("INSERT INTO mybatis.albums (name, year) VALUES (#{name}, #{year});")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    void insertNewArtist(Artist artist);
+    void insertNewAlbum(Album album);
 
-    @Select("SELECT * FROM mybatis.artists WHERE id = #{param1};")
+    @Select("SELECT * FROM mybatis.albums WHERE id = #{param1};")
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(
-                    property = "songs",
-                    column = "id",
-                    javaType = ArrayList.class,
-                    many = @Many(
-                            select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper.getSongsByArtistId",
-                            fetchType = FetchType.LAZY
-                    )
-            ),
             @Result(
                     property = "albums",
                     column = "id",
@@ -35,8 +26,8 @@ public interface ArtistMapper {
                     )
             )
     })
-    Artist getArtistByIdWithSongsAndAlbums(Long id);
+    Artist getAlbumByIdWithSongs(Long id);
 
-    @Select("SELECT * FROM mybatis.artists WHERE id = #{param1};")
-    Artist getArtistByIdWithoutSongs(Long id);
+    @Select("SELECT * FROM mybatis.album WHERE id = #{param1};")
+    Artist getAlbumByIdWithoutSongs(Long id);
 }

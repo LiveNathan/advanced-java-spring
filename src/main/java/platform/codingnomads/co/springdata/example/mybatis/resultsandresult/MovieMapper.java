@@ -14,7 +14,7 @@ public interface MovieMapper {
     // Select by id
     @Select("SELECT * FROM mybatis.movies WHERE id = #{param2};")
     @Results(id = "movieResultMap", value = {
-            @Result(property = "title", column = "title"), // Some of these are probably unnecessarily verbose. Just practicing.
+            @Result(property = "title", column = "title"), // We only need to list out the columns that don't match. Just practicing.
             @Result(property = "director", column = "director"),
             @Result(property = "rating", column = "rating"),
             @Result(property = "lengthMinutes", column = "length_minutes")
