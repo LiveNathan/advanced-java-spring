@@ -26,6 +26,9 @@ public class PlantService {
 
             SoilType soilType = SoilType.builder().dry(true).ph(7.6).name("tester").build();
             SoilType soilType2 = SoilType.builder().dry(false).ph(7.2).name("tester2").build();
+            SoilType soilType1 = SoilType.builder().dry(true).ph(6.9).name("tester1").build();
+            SoilType soilType3 = SoilType.builder().dry(true).ph(7.5).name("tester3").build();
+//            List<SoilType> soilTypes = List.of(soilType, soilType1, soilType2, soilType3);
 
             Plant plant = Plant.builder().name("test plant").sunType("full")
                     .fruitBearing(true).favoriteSoilType(soilType).build();
@@ -36,11 +39,11 @@ public class PlantService {
             plantRepo.save(plant1);
 
             Plant plant2 = Plant.builder().name("thingy").sunType("shade")
-                    .fruitBearing(false).favoriteSoilType(soilType).build();
+                    .fruitBearing(false).favoriteSoilType(soilType1).build();
             plantRepo.save(plant2);
 
             Plant plant3 = Plant.builder().name("test 3 plant").sunType("full").numDaysTillRipeFruit(10)
-                    .fruitBearing(true).favoriteSoilType(soilType2).build();
+                    .fruitBearing(true).favoriteSoilType(soilType3).build();
             plantRepo.save(plant3);
 
             Plant plant4 = Plant.builder().name("test 4 plant").sunType("full").numDaysTillRipeFruit(2)
