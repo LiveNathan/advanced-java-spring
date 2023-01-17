@@ -35,13 +35,12 @@ public interface SongMapper {
                             )
                     ),
                     @Result(
-                            //property to map to
-                            property = "album",
-                            column = "album_id",
-                            javaType = Album.class,
-                            one = @One(
-                                    select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.ArtistMapper.getAlbumByIdWithoutSongs",
-                                    fetchType = FetchType.LAZY
+                            property = "album",  // Instance variable
+                            column = "album_id",  // Table column name
+                            javaType = Album.class,  // Where to map onto
+                            one = @One(  // Each song has one album
+                                    select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.AlbumMapper.getAlbumByIdWithoutSongs",  // The exact method to use
+                                    fetchType = FetchType.LAZY  // Don't worry about getting every album with every song query.
                             )
                     )
             }

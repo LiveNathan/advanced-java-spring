@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @ToString(exclude = {"songs", "artist"})  // Song handles these toStrings
 public class Album {
+    private Long id;
     private String name;
     private int year;
     private Artist artist;
