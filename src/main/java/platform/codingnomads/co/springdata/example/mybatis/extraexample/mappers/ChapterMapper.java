@@ -11,6 +11,7 @@ import java.util.List;
 public interface ChapterMapper {
 
     @Insert("INSERT INTO mybatis.chapters (name, section_id) VALUES (#{param1}, #{param2});")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void insertNewChapter(String name, Long sectionId);
 
     @Select("SELECT id, name FROM mybatis.chapters WHERE id = #{param1}")
@@ -43,4 +44,7 @@ public interface ChapterMapper {
 
     @Delete("DELETE FROM mybatis.chapters WHERE id = #{param1};")
     void deleteChapterById(Long chapterId);
+
+    @Delete("TRUNCATE mybatis.chapters")
+    void deleteAll();
 }

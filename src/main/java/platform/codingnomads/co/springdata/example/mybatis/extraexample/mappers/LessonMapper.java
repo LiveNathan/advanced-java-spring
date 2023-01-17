@@ -10,6 +10,7 @@ import java.util.List;
 public interface LessonMapper {
 
     @Insert("INSERT INTO mybatis.lessons (name, text, chapter_id) VALUES (#{param1}, #{param2}, #{param3});")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void insertNewLesson(String lessonName, String text, Long chapterId);
 
     @Insert("INSERT INTO mybatis.lesson_image (lesson_id, image_name) VALUES (#{param1}, #{param2});")
@@ -41,5 +42,8 @@ public interface LessonMapper {
 
     @Delete("DELETE FROM mybatis.lessons WHERE id = #{param1};")
     void deleteLessonById(Long id);
+
+    @Delete("TRUNCATE mybatis.lessons")
+    void deleteAll();
 
 }

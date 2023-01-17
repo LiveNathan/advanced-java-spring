@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface ImageMapper {
 
     @Insert("INSERT INTO mybatis.images (name, image_data) VALUES (#{param1}, #{param2});")
+    @Options(keyColumn = "name", keyProperty = "name")
     int insertNewImage(String name, byte[] data);
 
     @Select("SELECT * FROM mybatis.images WHERE name = #{param1};")
@@ -29,4 +30,7 @@ public interface ImageMapper {
 
     @Delete("DELETE FROM mybatis.images WHERE name = #{param1};")
     void deleteImageByName(String name);
+
+    @Delete("TRUNCATE mybatis.images")
+    void deleteAll();
 }
