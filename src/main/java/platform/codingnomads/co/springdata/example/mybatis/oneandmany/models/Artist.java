@@ -1,14 +1,14 @@
 package platform.codingnomads.co.springdata.example.mybatis.oneandmany.models;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(exclude = "albums")
+@Builder
 public class Artist {
 
     private Long id;

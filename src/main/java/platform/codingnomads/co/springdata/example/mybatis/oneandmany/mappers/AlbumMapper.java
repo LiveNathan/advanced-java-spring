@@ -3,7 +3,6 @@ package platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Album;
-import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Artist;
 
 import java.util.ArrayList;
 
@@ -26,8 +25,8 @@ public interface AlbumMapper {
                     )
             )
     })
-    Artist getAlbumByIdWithSongs(Long id);
+    Album getAlbumByIdWithSongs(Long id);
 
     @Select("SELECT * FROM mybatis.albums WHERE id = #{param1};")
-    Artist getAlbumByIdWithoutSongs(Long id);
+    Album getAlbumByIdWithoutSongs(Long id);
 }

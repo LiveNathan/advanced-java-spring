@@ -7,6 +7,7 @@ import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Art
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Song;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface SongMapper {
@@ -65,7 +66,7 @@ public interface SongMapper {
     @ResultMap("songResultMap")
     ArrayList<Song> getSongsByArtistId(Long artistId);
 
-    @Select("SELECT * FROM mybatis.albums WHERE album_id = #{param1};")
+    @Select("SELECT * FROM mybatis.songs WHERE album_id = #{param1};")
     @ResultMap("songResultMap")
     ArrayList<Song> getSongsByAlbumId(Long albumId);
 
@@ -80,4 +81,19 @@ public interface SongMapper {
     @Delete("DELETE FROM mybatis.songs " +
             "WHERE artist_id = #{artistId} AND album_id = #{albumID};")
     void deleteSongsByAlbumAndArtist(Long artistId, Long albumId);
+
+    @Select("SELECT * from mybatis.albums WHERE id IN (SELECT (album_id) FROM mybatis.songs WHERE artist_id = #{param1})")
+    @Results({@Result(property = "id", column = "id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "year", column = "year"),
+            @Result(
+                    property = "songs",
+                    column = "id",
+                    javaType = ArrayList.class,
+                    many = @Many(
+                            select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper.getSongsByAlbumId",
+                            fetchType = FetchType.LAZY
+                    )
+            )})
+    List<Album> getAlbumsByArtistId(Long artistID);  // Get albums with songs
 }

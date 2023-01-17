@@ -37,10 +37,7 @@ public class OneAndManyApplication {
         return (args) -> {
 
             // Create artist
-            Artist artist1 = new Artist();
-            artist1.setName("Bon Iver");
-            artist1.setBio("Bon Iver is an American indie folk band founded " +
-                    "in 2006 by singer-songwriter Justin Vernon.");
+            Artist artist1 = Artist.builder().name("Bon Iver").bio("Bon Iver is an American indie folk band").build();
 
             // Create albums
             Album album1 = Album.builder().name("Bon Iver").year(2011).artist(artist1).build();

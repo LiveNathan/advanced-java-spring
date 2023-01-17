@@ -17,20 +17,11 @@ public interface ArtistMapper {
     @Results({
             @Result(property = "id", column = "id"),
             @Result(
-                    property = "songs",
-                    column = "id",
-                    javaType = ArrayList.class,
-                    many = @Many(
-                            select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper.getSongsByArtistId",
-                            fetchType = FetchType.LAZY
-                    )
-            ),
-            @Result(
                     property = "albums",
                     column = "id",
                     javaType = ArrayList.class,
                     many = @Many(
-                            select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper.getSongsByAlbumId",
+                            select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper.getAlbumsByArtistId",
                             fetchType = FetchType.LAZY
                     )
             )
