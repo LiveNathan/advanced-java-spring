@@ -71,7 +71,8 @@ public class QueryDSLDemo implements CommandLineRunner {
                 .fetchOne();
         System.out.println(area);
 
-        // Get area by id. This returns null for some reason.
+        // Get area by id. This returns null if the id does not exist in the DB.
+        // SQL never reuses an id. re: Strong consistency
         System.out.println("\n** Get area by id **");
         query = new JPAQuery<>(entityManager);
         area = query.select(qArea)
