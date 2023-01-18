@@ -8,11 +8,9 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Table(name = "routes")
 @Builder
-@ToString
+@Data
 public class Route implements Serializable {
 
     private static final long serialVersionUID = -2624055642258734917L;

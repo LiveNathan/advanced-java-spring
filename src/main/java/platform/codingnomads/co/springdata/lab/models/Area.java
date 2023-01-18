@@ -8,11 +8,9 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Table(name = "areas")
 @Builder
-@ToString
+@Data
 public class Area implements Serializable {
 
     private static final long serialVersionUID = 153236560504273881L;
