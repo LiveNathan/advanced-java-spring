@@ -8,14 +8,6 @@ import platform.codingnomads.co.springdata.example.mybatis.extraexample.mappers.
 import platform.codingnomads.co.springdata.example.mybatis.extraexample.mappers.ImageMapper;
 import platform.codingnomads.co.springdata.example.mybatis.extraexample.mappers.LessonMapper;
 import platform.codingnomads.co.springdata.example.mybatis.extraexample.mappers.SectionMapper;
-import platform.codingnomads.co.springdata.example.mybatis.extraexample.models.Chapter;
-import platform.codingnomads.co.springdata.example.mybatis.extraexample.models.Image;
-import platform.codingnomads.co.springdata.example.mybatis.extraexample.models.Lesson;
-import platform.codingnomads.co.springdata.example.mybatis.extraexample.models.Section;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 
 @SpringBootApplication
 public class MyBatisExampleApplication implements CommandLineRunner {
@@ -56,25 +48,9 @@ public class MyBatisExampleApplication implements CommandLineRunner {
 //        imageMapper.deleteAll();
         imageMapper.deleteImageByName("crossover");
 
-        // Image
-        byte[] array = Files.readAllBytes(Paths.get("/Users/nathanlively/Downloads/stencil.instagram-photo (4).jpg"));
-        Image image = Image.builder().name("image1").imageData(array).build();
-        List<Image> images = List.of(image);
-//        imageMapper.insertNewImage("crossover", array);
-
-        // Lesson
-        Lesson lesson = Lesson.builder().name("lesson1").text("This is lesson 1.").imageArrayList(images).build();
-        List<Lesson> lessons = List.of(lesson);
-//        lessonMapper.insertNewLesson();
-
-        // Chapter
-        Chapter chapter = Chapter.builder().name("Alpha").lessons(lessons).build();
-        List<Chapter> chapters = List.of(chapter);
-//        chapterMapper.insertNewChapter("alpha",);
-
         // Section
-        Section section = Section.builder().name("A").chapters(chapters).build();
-//        sectionMapper.insertNewSection("A");
+        sectionMapper.insertNewSection("Section1");
+        Integer sectionId = sectionMapper.getSectionIdByName("Section1");
 
 
 
