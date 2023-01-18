@@ -7,10 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.Transactional;
-import platform.codingnomads.co.springdata.example.querydsl.models.Area;
-import platform.codingnomads.co.springdata.example.querydsl.models.QArea;
-import platform.codingnomads.co.springdata.example.querydsl.models.Route;
-import platform.codingnomads.co.springdata.example.querydsl.models.SearchQuery;
+import platform.codingnomads.co.springdata.example.querydsl.models.*;
 import platform.codingnomads.co.springdata.example.querydsl.repository.AreaRepository;
 import platform.codingnomads.co.springdata.example.querydsl.repository.RouteRepository;
 
@@ -65,7 +62,7 @@ public class QueryDSLDemo implements CommandLineRunner {
 
         routesByCodeAndOrigin.forEach(System.out::println);
 
-        //query the database straight-up without using repository
+        // Query the database straight-up without using repository
         QArea qArea = QArea.area;
         JPAQuery<?> query = new JPAQuery<>(entityManager);
         Area area = query.select(qArea)
@@ -73,6 +70,34 @@ public class QueryDSLDemo implements CommandLineRunner {
                 .where(qArea.code.eq("A"))
                 .fetchOne();
         System.out.println(area);
+
+        // Get area by id. This returns null for some reason.
+        System.out.println("\n** Get area by id **");
+        query = new JPAQuery<>(entityManager);
+        area = query.select(qArea)
+                .from(qArea)
+                .where(qArea.id.eq(1L))
+                .fetchOne();
+        System.out.println(area);
+
+        // Get area by code
+        System.out.println("\n** Get area by code **");
+        query = new JPAQuery<>(entityManager);
+        area = query.select(qArea)
+                .from(qArea)
+                .where(qArea.code.eq("A"))
+                .fetchOne();
+        System.out.println(area);
+
+        // Get route by code
+        System.out.println("\n** Get route by code **");
+        QRoute qRoute = QRoute.route;
+        query = new JPAQuery<>(entityManager);
+        Route route = query.select(qRoute)
+                .from(qRoute)
+                .where(qRoute.code.eq("A-B"))
+                .fetchOne();
+        System.out.println(route);
 
         routeRepository.deleteAll();
         areaRepository.deleteAll();
