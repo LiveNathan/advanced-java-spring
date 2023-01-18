@@ -10,7 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "routes")
+@Table(name = "routes_dsl")
 @Builder
 @ToString
 public class Route implements Serializable {

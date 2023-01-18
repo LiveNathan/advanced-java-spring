@@ -10,7 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "areas")
+@Table(name = "areas_dsl")
 @Builder
 @ToString
 public class Area implements Serializable {
