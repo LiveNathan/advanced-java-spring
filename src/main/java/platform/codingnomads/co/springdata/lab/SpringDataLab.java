@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import platform.codingnomads.co.springdata.lab.models.Area;
+import platform.codingnomads.co.springdata.lab.models.Route;
 import platform.codingnomads.co.springdata.lab.repositories.AreaRepository;
 import platform.codingnomads.co.springdata.lab.repositories.RouteRepository;
-
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -26,21 +23,22 @@ public class SpringDataLab implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // Insert areas
-        final List<Area> areas = areaRepository.saveAll(
-                Arrays.asList(
-                        Area.builder().code("G").build(),
-                        Area.builder().code("H").build(),
-                        Area.builder().code("Y").build(),
-                        Area.builder().code("Z").build(),
-                        Area.builder().code("A").build(),
-                        Area.builder().code("B").build(),
-                        Area.builder().code("C").build(),
-                        Area.builder().code("D").build()
-                )
-        );
+//        final List<Area> areas = areaRepository.saveAll(
+//                Arrays.asList(
+//                        Area.builder().code("G").build(),
+//                        Area.builder().code("H").build(),
+//                        Area.builder().code("Y").build(),
+//                        Area.builder().code("Z").build(),
+//                        Area.builder().code("A").build(),
+//                        Area.builder().code("B").build(),
+//                        Area.builder().code("C").build(),
+//                        Area.builder().code("D").build()
+//                )
+//        );
 
         // Insert routes
 //        Route route = Route.builder().origin(areaRepository.findByCode("Y")).destination(areaRepository.findByCode("Z")).build();
+        Route route = new Route(areaRepository.findByCode("Y"), areaRepository.findByCode("Z"));
 
 
     }

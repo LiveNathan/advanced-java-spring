@@ -9,7 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "routes")
-@Builder
+//@Builder  // Removing this to force everyone to use the constructor to avoid invalid objects.
 @Data
 public class Route implements Serializable {
 
@@ -36,5 +36,12 @@ public class Route implements Serializable {
     private Area destination;
 
     @Column(unique = true)
-    private String code = origin.getCode() + "-" + destination.getCode();
+    private String code;
+
+    public Route(Area origin, Area destination) {
+        this.origin = origin;
+        this.destination = destination;
+        this.code = origin.getCode() + "-" + destination.getCode();
+    }
+
 }
