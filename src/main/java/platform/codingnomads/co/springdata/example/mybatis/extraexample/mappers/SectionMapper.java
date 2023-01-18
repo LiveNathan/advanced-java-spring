@@ -13,8 +13,9 @@ public interface SectionMapper {
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void insertNewSection(String name);
 
-    @Select("SELECT id FROM mybatis.sections WHERE name = #{name};")
+    @Select("SELECT * FROM mybatis.sections WHERE name = #{name};")
     Integer getSectionIdByName(String name);
+//    Section getSectionByName(String name);
 
     @Select("SELECT id, name FROM mybatis.sections WHERE id = #{param1};")
     @Results(

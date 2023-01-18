@@ -46,11 +46,12 @@ public class MyBatisExampleApplication implements CommandLineRunner {
 //        chapterMapper.deleteAll();
 //        lessonMapper.deleteAll();
 //        imageMapper.deleteAll();
-        imageMapper.deleteImageByName("crossover");
+//        imageMapper.deleteImageByName("crossover");
 
         // Section
         sectionMapper.insertNewSection("Section1");
-        Integer sectionId = sectionMapper.getSectionIdByName("Section1");
+//        Integer sectionId = sectionMapper.getSectionIdByName("Section1");
+//        Section section = sectionMapper.getSectionByName("Section1");
 
 
 
