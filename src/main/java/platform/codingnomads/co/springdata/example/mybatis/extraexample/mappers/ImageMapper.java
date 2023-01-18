@@ -12,6 +12,10 @@ public interface ImageMapper {
     @Options(keyColumn = "name", keyProperty = "name")
     int insertNewImage(String name, byte[] data);
 
+    @Insert("INSERT INTO mybatis.images (name, image_data) VALUES (#{name}, #{imageData});")
+    @Options(keyColumn = "name", keyProperty = "name")
+    int insertNewImageByObject(Image image);
+
     @Select("SELECT * FROM mybatis.images WHERE name = #{param1};")
     Image getImageByName(String name);
 

@@ -11,8 +11,15 @@ import java.util.List;
 public interface ChapterMapper {
 
     @Insert("INSERT INTO mybatis.chapters (name, section_id) VALUES (#{param1}, #{param2});")
-    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    @Options(useGeneratedKeys = true, keyColumn = "id")
     void insertNewChapter(String name, Long sectionId);
+
+    @Insert("INSERT INTO mybatis.chapters (name, section_id) VALUES (#{chapter.name}, #{param2});")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    void insertNewChapterByObject(Chapter chapter, Long sectionId);
+
+    @Select("SELECT id FROM mybatis.chapters WHERE name = #{name};")
+    Long getChapterIdByName(String name);
 
     @Select("SELECT id, name FROM mybatis.chapters WHERE id = #{param1}")
     @Results(

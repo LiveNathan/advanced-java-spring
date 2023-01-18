@@ -10,12 +10,15 @@ import java.util.List;
 public interface SectionMapper {
 
     @Insert("INSERT INTO mybatis.sections (name) VALUES (#{name});")
-    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    void insertNewSection(String name);
+    @Options(useGeneratedKeys = true, keyColumn = "id")  // Removing keyProperty fixed this method because it was trying return the id.
+    void insertNewSection(String name);  // This omits the id field! Java will have to create the object.
 
-    @Select("SELECT * FROM mybatis.sections WHERE name = #{name};")
-    Integer getSectionIdByName(String name);
-//    Section getSectionByName(String name);
+    @Insert("INSERT INTO mybatis.sections (name) VALUES (#{name});")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    void insertNewSectionByObject(Section section);  // I provide the object. On the way back, update my object with the id.
+
+    @Select("SELECT id FROM mybatis.sections WHERE name = #{name};")
+    Long getSectionIdByName(String name);
 
     @Select("SELECT id, name FROM mybatis.sections WHERE id = #{param1};")
     @Results(
@@ -32,7 +35,7 @@ public interface SectionMapper {
     Section getSectionById(Long sectionId);
 
     @Delete("DELETE FROM mybatis.sections WHERE id = #{id};")
-    int deleteSectionById(Long id);
+    int deleteSectionById(Long id);  // Returns number of rows affected.
 
     @Delete("TRUNCATE mybatis.sections")
     void deleteAll();
