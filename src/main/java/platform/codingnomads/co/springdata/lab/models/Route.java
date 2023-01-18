@@ -19,9 +19,6 @@ public class Route implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
-    private String code;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
             name = "origin_area_id",
@@ -37,4 +34,7 @@ public class Route implements Serializable {
             foreignKey = @ForeignKey(name = "fk_routes_destination_area_id")
     )
     private Area destination;
+
+    @Column(unique = true)
+    private String code = origin.getCode() + "-" + destination.getCode();
 }
