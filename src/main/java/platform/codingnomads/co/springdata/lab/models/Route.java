@@ -21,7 +21,7 @@ public class Route implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)  // Had to change these to EAGER to fix a session issue. Is there a better way?
     @JoinColumn(
             name = "origin_area_id",
             nullable = false,
