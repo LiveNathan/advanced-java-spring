@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     List<Favorite> findByThoughtsContains(String pattern);
+
     List<Favorite> findByOrderByRatingDesc();
+
     boolean existsFavoriteByThoughts(String thought);
 }

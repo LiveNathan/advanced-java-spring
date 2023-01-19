@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface RouteRepository extends JpaRepository<Route, Long> {
     Route findByCode(String code);
+
     List<Route> findByOrigin(Area origin);
 }
