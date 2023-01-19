@@ -1,6 +1,8 @@
 package platform.codingnomads.co.springdata.lab.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +21,7 @@ public class Route implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(
             name = "origin_area_id",
             nullable = false,
@@ -27,7 +29,7 @@ public class Route implements Serializable {
     )
     private Area origin;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(
             name = "destination_area_id",
             nullable = false,
@@ -41,7 +43,7 @@ public class Route implements Serializable {
     public Route(Area origin, Area destination) {
         this.origin = origin;
         this.destination = destination;
-        this.code = origin.getCode() + "-" + destination.getCode();
+        this.code = origin.getCode() + "-" + destination.getCode();  // automatically generate its code based on the specified origin and destination (Example: "G-H").
     }
 
 }
