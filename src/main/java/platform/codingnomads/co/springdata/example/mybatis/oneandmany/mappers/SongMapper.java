@@ -2,17 +2,19 @@ package platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
+import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Album;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Artist;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Song;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface SongMapper {
 
     @Insert("INSERT INTO mybatis.songs " +
-            "(name, artist_id, album_name, song_length) " +
-            "VALUES (#{name}, #{artist.id}, #{albumName}, #{songLength});")
+            "(name, artist_id, album_id, song_length) " +
+            "VALUES (#{name}, #{artist.id}, #{album.id}, #{songLength});")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void insertNewSong(Song song);
 
@@ -22,7 +24,6 @@ public interface SongMapper {
     @Results(
             id = "songResultMap",
             value = {
-                    @Result(property = "albumName", column = "album_name"),
                     @Result(property = "songLength", column = "song_length"),
                     @Result(
                             //property to map to
@@ -32,6 +33,15 @@ public interface SongMapper {
                             one = @One(
                                     select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.ArtistMapper.getArtistByIdWithoutSongs",
                                     fetchType = FetchType.LAZY
+                            )
+                    ),
+                    @Result(
+                            property = "album",  // Instance variable
+                            column = "album_id",  // Table column name
+                            javaType = Album.class,  // Where to map onto
+                            one = @One(  // Each song has one album
+                                    select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.AlbumMapper.getAlbumByIdWithoutSongs",  // The exact method to use
+                                    fetchType = FetchType.LAZY  // Don't worry about getting every album with every song query.
                             )
                     )
             }
@@ -46,9 +56,9 @@ public interface SongMapper {
 
     @Select("SELECT * " +
             "FROM mybatis.songs " +
-            "WHERE artist_id = #{param1} AND album_name = #{param2};")
+            "WHERE artist_id = #{param1} AND album_id = #{param2};")
     @ResultMap("songResultMap")
-    ArrayList<Song> getSongsByAlbumAndArtist(Long artistId, String albumName);
+    ArrayList<Song> getSongsByAlbumAndArtist(Long artistId, Long albumId);
 
     @Select("SELECT *" +
             "FROM mybatis.songs " +
@@ -56,8 +66,12 @@ public interface SongMapper {
     @ResultMap("songResultMap")
     ArrayList<Song> getSongsByArtistId(Long artistId);
 
+    @Select("SELECT * FROM mybatis.songs WHERE album_id = #{param1};")
+    @ResultMap("songResultMap")
+    ArrayList<Song> getSongsByAlbumId(Long albumId);
+
     @Update("UPDATE mybatis.songs " +
-            "SET name = #{name}, artist_id = #{artist.id}, album_name = #{albumName}, song_length = #{songLength} " +
+            "SET name = #{name}, artist_id = #{artist.id}, album_id = #{album.id}, song_length = #{songLength} " +
             "WHERE id = #{id};")
     void updateSong(Song song);
 
@@ -65,7 +79,21 @@ public interface SongMapper {
     void deleteSongById(Long songId);
 
     @Delete("DELETE FROM mybatis.songs " +
-            "WHERE artist_id = #{artistId} AND album_name = #{albumName};")
-    void deleteSongsByAlbumAndArtist(Long artistId, String albumName);
+            "WHERE artist_id = #{artistId} AND album_id = #{albumID};")
+    void deleteSongsByAlbumAndArtist(Long artistId, Long albumId);
 
+    @Select("SELECT * from mybatis.albums WHERE id IN (SELECT (album_id) FROM mybatis.songs WHERE artist_id = #{param1})")
+    @Results({@Result(property = "id", column = "id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "year", column = "year"),
+            @Result(
+                    property = "songs",
+                    column = "id",
+                    javaType = ArrayList.class,
+                    many = @Many(
+                            select = "platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper.getSongsByAlbumId",
+                            fetchType = FetchType.LAZY
+                    )
+            )})
+    List<Album> getAlbumsByArtistId(Long artistID);  // Get albums with songs
 }

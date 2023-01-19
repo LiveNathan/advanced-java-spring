@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class ResultsDemoApplication {
 
@@ -13,7 +15,7 @@ public class ResultsDemoApplication {
     }
 
     @Bean
-    public CommandLineRunner loadInitialData(SongMapper songMapper) {
+    public CommandLineRunner loadInitialData(SongMapper songMapper, MovieMapper movieMapper) {
         return (args) -> {
             //notice the setter names have changed to match Java naming conventions
             Song song1 = new Song();
@@ -33,6 +35,35 @@ public class ResultsDemoApplication {
 
             Song song3 = songMapper.getSongById(1L);
             System.out.println(song3.toString());
+
+            // Movies
+            Movie movieVacationFriends = Movie.builder().title("Vacation Friends").director("Clay Tarver").rating("R").lengthMinutes(103).build();
+            Movie movieM3GAN = Movie.builder().title("M3GAN").director("Gerard Johnstone").rating("PG-13").lengthMinutes(102).build();
+            Movie moviePussInBoots = Movie.builder().title("Puss in Boots: The Last Wish").director("Joel Crawford").rating("PG").lengthMinutes(102).build();
+            List<Movie> movies = List.of(movieVacationFriends, movieM3GAN, moviePussInBoots);
+            for (Movie movie :
+                    movies) {
+                movieMapper.insertNewMovie(movie);
+            }
+
+            // Select by id
+            System.out.println("\n** getMovieById **");
+            Movie movie = movieMapper.getMovieById(1L);
+            System.out.println(movie);
+
+            // Select by title like
+            System.out.println("\n** getMoviesWithTitleLike **");
+            List<Movie> moviesLikeBoot = movieMapper.getMoviesWithTitleLike("boot");
+            moviesLikeBoot.forEach(System.out::println);
+
+            // Update by id
+            System.out.println("\n** updateMovie **");
+            movie.setLengthMinutes(101);
+            movieMapper.updateMovie(movie);
+
+            // Delete all
+            System.out.println("\n** deleteAllMovies **");
+            movieMapper.deleteAllMovies();
         };
     }
 }

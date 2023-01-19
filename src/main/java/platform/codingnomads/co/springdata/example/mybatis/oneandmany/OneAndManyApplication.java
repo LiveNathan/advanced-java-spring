@@ -4,13 +4,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.AlbumMapper;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.ArtistMapper;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.mappers.SongMapper;
+import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Album;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Artist;
 import platform.codingnomads.co.springdata.example.mybatis.oneandmany.models.Song;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 @SpringBootApplication
 public class OneAndManyApplication {
@@ -31,44 +33,57 @@ public class OneAndManyApplication {
     }
 
     @Bean
-    public CommandLineRunner loadInitialData(SongMapper songMapper, ArtistMapper artistMapper) {
+    public CommandLineRunner loadInitialData(SongMapper songMapper, ArtistMapper artistMapper, AlbumMapper albumMapper) {
         return (args) -> {
 
-            Artist artist1 = new Artist();
-            artist1.setName("Bon Iver");
-            artist1.setBio("Bon Iver is an American indie folk band founded " +
-                    "in 2006 by singer-songwriter Justin Vernon.");
+            // Create artist
+            Artist artist1 = Artist.builder().name("Bon Iver").bio("Bon Iver is an American indie folk band").build();
+
+            // Create albums
+            Album album1 = Album.builder().name("Bon Iver").year(2011).artist(artist1).build();
+            Album album2 = Album.builder().name("For Emma, Forever Ago").year(2007).artist(artist1).build();
+
+            // Create song
+            Song song1 = Song.builder().name("Minnesota, WI").songLength(232).album(album1).artist(artist1).build();
+            Song song2 = Song.builder().name("Calgary").songLength(250).album(album1).artist(artist1).build();
+            Song song3 = Song.builder().name("Flume").songLength(219).album(album2).artist(artist1).build();
+            Song song4 = Song.builder().name("Re: Stacks").songLength(401).album(album2).artist(artist1).build();
+            List<Song> songs = List.of(song1, song2, song3, song4);
+
+            // Connect artist to album
+            ArrayList<Album> albums1 = new ArrayList<>();
+            albums1.add(album1);
+            albums1.add(album2);
+            artist1.setAlbums(albums1);
+
+            // Connect album to songs. Do we really need to do this if we have connected them above??
+            album1.setSongs(List.of(song1, song2));
+            album2.setSongs(List.of(song3, song4));
+
+            // Insert
             artistMapper.insertNewArtist(artist1);
+            albumMapper.insertNewAlbum(album1);
+            albumMapper.insertNewAlbum(album2);
+            for (Song song :
+                    songs) {
+                songMapper.insertNewSong(song);
+            }
 
-            Song song1 = new Song();
-            song1.setName("Minnesota, WI");
-            song1.setAlbumName("Bon Iver");
-            song1.setArtist(artist1);
-            song1.setSongLength(232);
-            artist1.setSongs(new ArrayList<>(Collections.singletonList(song1)));
+            // getSongById
+            System.out.println("\n** getSongById **");
+            Song songById = songMapper.getSongById(1L);
+            System.out.println(songById.toString());
 
-            Artist artist2 = new Artist();
-            artist2.setName("Gus Dapperton");
-            artist2.setBio("Brendan Patrick Rice, better known by his stage name Gus Dapperton, " +
-                    "is an American singer and songwriter from Warwick, New York.");
-            artistMapper.insertNewArtist(artist2);
-
-            Song song2 = new Song();
-            song2.setName("Post Humorous");
-            song2.setAlbumName("Orca");
-            song2.setArtist(artist2);
-            song2.setSongLength(279);
-            artist2.setSongs(new ArrayList<>(Collections.singletonList(song2)));
-
-            songMapper.insertNewSong(song1);
-            songMapper.insertNewSong(song2);
-
-            Song song3 = songMapper.getSongById(1L);
-            System.out.println(song3.toString());
-
-            Artist artist3 = artistMapper.getArtistByIdWithSongs(1L);
+            // getArtistByIdWithSongsAndAlbums
+            System.out.println("\n** getArtistByIdWithSongsAndAlbums **");
+            Artist artist3 = artistMapper.getArtistByIdWithSongsAndAlbums(1L);
             System.out.println(artist3.toString());
-            System.out.println(artist3.getSongs());
+            List<Album> albums = artist3.getAlbums();
+            System.out.println("Their albums: ");
+            albums.forEach(System.out::println);
+            List<Song> songs1 = albums.get(0).getSongs();
+            System.out.println("The first album's songs: ");
+            songs1.forEach(System.out::println);
         };
     }
 }

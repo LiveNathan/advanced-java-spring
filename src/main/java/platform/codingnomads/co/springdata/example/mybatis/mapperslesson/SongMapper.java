@@ -23,6 +23,10 @@ public interface SongMapper {
             "WHERE name = #{param1};")
     ArrayList<Song> getSongsByName(String name);
 
+    // Get song names like
+    @Select("SELECT * FROM mybatis.songs WHERE name LIKE '%' #{pattern} '%';")
+    ArrayList<Song> getSongsWithNameLike(String pattern);
+
     @Select("SELECT * " +
             "FROM mybatis.songs " +
             "WHERE song_length > #{param1}")
@@ -49,5 +53,9 @@ public interface SongMapper {
     @Delete("DELETE FROM mybatis.songs " +
             "WHERE artist_name = #{artistName} AND album_name = #{albumName};")
     void deleteSongsByAlbumAndArtist(String artistName, String albumName);
+
+    // Delete all
+    @Delete("TRUNCATE mybatis.songs")
+    void deleteAllSongs();
 
 }
