@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class ExcuseTemplate {
-    String excuse;
+    private String excuse;
 }

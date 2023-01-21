@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class BoredTemplate {
-    String activity;
-    String type;
-    int participants;
-    float price;
-    String link;
-    String key;
-    float accessibility;
+    private String activity;
+    private String type;
+    private int participants;
+    private float price;
+    private String link;
+    private String key;
+    private float accessibility;
 }
