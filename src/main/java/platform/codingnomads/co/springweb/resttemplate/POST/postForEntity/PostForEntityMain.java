@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import platform.codingnomads.co.springweb.resttemplate.POST.models.ResponseObject;
-import platform.codingnomads.co.springweb.resttemplate.POST.models.Task;
+import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.UserResponseObject;
+import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.UserTemplate;
 
 import java.util.Objects;
 
@@ -26,6 +26,7 @@ public class PostForEntityMain {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
+            /* Already ran once successfully
             Task newTask = Task.builder()
                     .name("learn how to use postForEntity()")
                     .description("get comfortable using the RestTemplate postForEntity() method")
@@ -41,7 +42,16 @@ public class PostForEntityMain {
                 System.out.println(Objects.requireNonNull(responseEntity.getBody()));
             } else {
                 System.out.println(Objects.requireNonNull(responseEntity.getBody()).getError());
+            }            */
+            // New User
+            UserTemplate newUser = UserTemplate.builder().email("pepper5@build.com").first_name("Pepper5").last_name("Build5").build();
+            ResponseEntity<UserResponseObject> responseEntity = restTemplate.postForEntity("http://demo.codingnomads.co:8080/tasks_api/users", newUser, UserResponseObject.class);
+            if (responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
+                System.out.println(Objects.requireNonNull(responseEntity.getBody()));
+            } else {
+                System.out.println(Objects.requireNonNull(responseEntity.getBody().getError()));
             }
+
         };
     }
 }

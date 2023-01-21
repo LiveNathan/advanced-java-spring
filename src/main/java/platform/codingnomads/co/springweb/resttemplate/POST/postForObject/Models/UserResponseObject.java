@@ -3,7 +3,7 @@ package platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Model
 import lombok.Data;
 
 @Data
-public class ResponseObject {
+public class UserResponseObject {
     UserTemplate data;
     ErrorTemplate error;
     String status;

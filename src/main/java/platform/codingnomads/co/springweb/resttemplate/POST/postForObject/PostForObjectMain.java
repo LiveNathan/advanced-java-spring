@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.ResponseObject;
+import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.UserResponseObject;
 import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.UserTemplate;
 
 @SpringBootApplication
@@ -40,7 +40,7 @@ public class PostForObjectMain {
 
             // New user
             UserTemplate newUser = UserTemplate.builder().email("pepper2@build.com").first_name("Pepper2").last_name("Build").build();
-            ResponseObject userReturnedByServerAfterPost = restTemplate.postForObject("http://demo.codingnomads.co:8080/tasks_api/users", newUser, ResponseObject.class);
+            UserResponseObject userReturnedByServerAfterPost = restTemplate.postForObject("http://demo.codingnomads.co:8080/tasks_api/users", newUser, UserResponseObject.class);
             if (userReturnedByServerAfterPost != null){
                 System.out.println(userReturnedByServerAfterPost.toString());
             } else {
