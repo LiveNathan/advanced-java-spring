@@ -41,7 +41,7 @@ public class PostForObjectMain {
             // New user
             UserTemplate newUser = UserTemplate.builder().email("pepper2@build.com").first_name("Pepper2").last_name("Build").build();
             UserResponseObject userReturnedByServerAfterPost = restTemplate.postForObject("http://demo.codingnomads.co:8080/tasks_api/users", newUser, UserResponseObject.class);
-            if (userReturnedByServerAfterPost != null){
+            if (userReturnedByServerAfterPost != null) {
                 System.out.println(userReturnedByServerAfterPost.toString());
             } else {
                 System.out.println("Returned null.");
