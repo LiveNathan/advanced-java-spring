@@ -38,4 +38,17 @@ public class ResponseController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    // Nathan practice
+    @GetMapping("/practice/{id}")
+    public ResponseEntity<User> nathanPractice(@PathVariable int id) {
+        if (user.getId() == id) {
+            return ResponseEntity.created(URI.create("/users/" + user.getId()))
+                    .header("Header 1", "header1 values")
+                    .header("header 2", "header 2 values")
+                    .body(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
