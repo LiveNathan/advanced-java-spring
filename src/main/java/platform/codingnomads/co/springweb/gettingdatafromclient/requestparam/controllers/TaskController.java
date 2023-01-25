@@ -52,8 +52,8 @@ public class TaskController {
     }
 
     @GetMapping(value = "/plastic")
-    public Task getTaskWithMoreParameters(@RequestParam String name, @RequestParam Boolean isComplete){
-        return Task.builder().name(name).completed(isComplete).build();
+    public Task getTaskWithMoreParameters(@RequestParam(required = false, defaultValue = "1") Long id, @RequestParam String name, @RequestParam(required = false, defaultValue = "false") Boolean isComplete){
+        return Task.builder().id(id).name(name).completed(isComplete).build();
     }
 
 }
