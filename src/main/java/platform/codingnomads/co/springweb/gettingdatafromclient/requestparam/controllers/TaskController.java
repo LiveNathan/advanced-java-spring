@@ -44,4 +44,16 @@ public class TaskController {
                 .mapToObj(i -> Task.builder().id((long) i).name(names.get(i)).build())
                 .collect(Collectors.toList());
     }
+
+    // Nathan practice
+    @GetMapping
+    public String getSpam(@RequestParam(required = false, defaultValue = "eggs") String spam) {
+        return "Spam: " + spam;
+    }
+
+    @GetMapping(value = "/plastic")
+    public Task getTaskWithMoreParameters(@RequestParam String name, @RequestParam Boolean isComplete){
+        return Task.builder().name(name).completed(isComplete).build();
+    }
+
 }
