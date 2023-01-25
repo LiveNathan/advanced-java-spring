@@ -14,6 +14,8 @@ import platform.codingnomads.co.springweb.gettingdatafromclient.requestbody.repo
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static org.springframework.util.StringUtils.hasText;
+
 @RestController
 public class TaskController {
 
@@ -46,6 +48,31 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(message);
         } else {
             return ResponseEntity.ok().body(message);
+        }
+    }
+
+    // Nathan practice
+    @PostMapping("/practice")
+    public ResponseEntity<?> snow(@RequestBody(required = false) String string) {
+        if (string == null){
+            string = "String is empty.";
+            return ResponseEntity.badRequest().body(string);
+        }
+        return ResponseEntity.ok().body(string);
+    }
+
+    @PostMapping("/api/tasks2")
+    public ResponseEntity<Task> createTask2(@RequestBody Task task){
+        if (hasText(task.getName())){
+            final Task savedTask = taskRepository.save(task);
+            try {
+                return ResponseEntity.created(new URI("/api/tasks/" + savedTask.getId())).body(savedTask);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            task.setCreatedAt(null);
+            return ResponseEntity.badRequest().body(task);
         }
     }
 }
