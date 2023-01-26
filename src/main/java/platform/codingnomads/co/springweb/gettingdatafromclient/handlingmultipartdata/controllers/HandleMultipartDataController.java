@@ -160,6 +160,34 @@ public class HandleMultipartDataController {
                 .build());
     }
 
+    // Duplicate a file and change the name
+    @GetMapping("/duplicate/{id}")
+    public ResponseEntity<?> updateFileById(@PathVariable(name = "id") Long fileId, @RequestParam(required = false, defaultValue = "newName") String newFileName) {
+
+        final Optional<DatabaseFile> optional = fileRepository.findById(fileId);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().body(new NoSuchFileException("The ID you passed in was not valid."));
+        }
+
+        DatabaseFile databaseFile = optional.get();
+        databaseFile.setFileName(newFileName);  // I removed the try block here. Not sure if that's best.
+
+        final DatabaseFile savedFile = fileRepository.save(databaseFile);
+
+        savedFile.setDownloadUrl(ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(String.valueOf(savedFile.getId()))
+                .toUriString());
+
+        return ResponseEntity.ok(FileResponse.builder()
+                .fileName(databaseFile.getFileName())
+                .fileDownloadUri(savedFile.getDownloadUrl())
+                .fileType(savedFile.getFileType())
+                //.size(file.getSize())  // I don't think we have a way to get size.
+                .build());
+    }
+
     //@DeleteMapping("/deleteFile/{id}")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFileById(@PathVariable("id") Long fileId) {
