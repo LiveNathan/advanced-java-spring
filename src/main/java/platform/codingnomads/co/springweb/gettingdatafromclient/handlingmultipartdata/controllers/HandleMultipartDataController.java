@@ -16,6 +16,8 @@ import platform.codingnomads.co.springweb.gettingdatafromclient.handlingmultipar
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -93,6 +95,28 @@ public class HandleMultipartDataController {
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         String.format("attachment; filename=\"%s\"", databaseFile.getFileName()))
                 .body(new ByteArrayResource(databaseFile.getData()));
+    }
+
+    // GET file by file name
+    @GetMapping("/searchByName/{fileName}")
+    public ResponseEntity<?> searchFilesByName(@PathVariable String fileName) {
+
+        final boolean existsByFileName = fileRepository.existsByFileName(fileName);
+
+        if (!existsByFileName) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found with file name: " + fileName);
+        }
+
+        List<DatabaseFile> databaseFiles = fileRepository.findByFileName(fileName);
+
+        List<FileResponse> fileResponses = new ArrayList<>();  // Is there a more efficient way to do this?
+        for (DatabaseFile databaseFile:databaseFiles) {
+            FileResponse fileResponse = FileResponse.builder().fileName(databaseFile.getFileName())
+                    .fileType(databaseFile.getFileType()).build();
+            fileResponses.add(fileResponse);
+        }
+
+        return ResponseEntity.ok(fileResponses);
     }
 
     //@PutMapping("/uploadSingleFile/{id}")
