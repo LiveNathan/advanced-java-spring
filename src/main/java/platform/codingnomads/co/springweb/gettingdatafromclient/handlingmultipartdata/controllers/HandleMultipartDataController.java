@@ -110,7 +110,7 @@ public class HandleMultipartDataController {
         List<DatabaseFile> databaseFiles = fileRepository.findByFileName(fileName);
 
         List<FileResponse> fileResponses = new ArrayList<>();  // Is there a more efficient way to do this?
-        for (DatabaseFile databaseFile:databaseFiles) {
+        for (DatabaseFile databaseFile : databaseFiles) {
             FileResponse fileResponse = FileResponse.builder().fileName(databaseFile.getFileName())
                     .fileType(databaseFile.getFileType()).build();
             fileResponses.add(fileResponse);

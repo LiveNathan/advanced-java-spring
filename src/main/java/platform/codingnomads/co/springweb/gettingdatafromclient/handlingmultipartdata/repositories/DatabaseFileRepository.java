@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface DatabaseFileRepository extends JpaRepository<DatabaseFile, Long> {
     boolean existsByFileName(String fileName);
+
     List<DatabaseFile> findByFileName(String fileName);
 }
