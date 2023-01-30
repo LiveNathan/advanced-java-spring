@@ -27,9 +27,9 @@ public class HelloWorldController {
     }
 
     @RequestMapping(path = "/hello/pojo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String helloTask() {
+    public Task helloTask() {
         Task task = Task.builder().userId(479).name("Build bars.").description("So many bars.").completed(false).build();
-        return task.toString();
+        return task;
     }
 }
 
