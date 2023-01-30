@@ -55,8 +55,7 @@ public class TaskController {
     @PostMapping("/practice")
     public ResponseEntity<?> snow(@RequestBody(required = false) String string) {
         if (string == null){
-            string = "String is empty.";
-            return ResponseEntity.badRequest().body(string);
+            return ResponseEntity.badRequest().body("String is empty.");
         }
         return ResponseEntity.ok().body(string);
     }
