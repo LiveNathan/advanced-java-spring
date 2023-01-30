@@ -21,9 +21,9 @@ public class HelloWorldController {
     }
 
     @RequestMapping(path = "/hello/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String helloList() {
+    public List helloList() {
         List<Integer> integerList = List.of(1, 2, 3, 4);
-        return integerList.toString();
+        return integerList;
     }
 
     @RequestMapping(path = "/hello/pojo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
