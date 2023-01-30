@@ -78,11 +78,12 @@ public class DeleteMain {
             // Confirm data was returned & avoid NullPointerExceptions
             if (responseObject == null) {
                 throw new Exception("The server did not return anything. Not even a ResponseObject!");
-            } else if (responseObject.getData() == null) {
+            } 
+            if (responseObject.getData() == null) {
                 throw new Exception("The server encountered this error while creating the user:" + responseObject.getError().getMessage());
-            } else {
-                userTemplate = responseObject.getData();
-            }
+            } 
+            
+            userTemplate = responseObject.getData();
 
             System.out.println("The user was successfully created");
             System.out.println(userTemplate);
