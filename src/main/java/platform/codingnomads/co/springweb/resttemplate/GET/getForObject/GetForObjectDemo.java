@@ -48,7 +48,7 @@ public class GetForObjectDemo {
             boredApiParameters.put("participants", 2);
 //            randomActivity = restTemplate.getForObject("http://www.boredapi.com/api/activity?participants=2", BoredTemplate.class, boredApiParameters);
 //            System.out.println(randomActivity);
-            ResponseEntity<BoredTemplate> responseEntity = restTemplate.getForEntity("http://www.boredapi.com/api/activity?participants=2", BoredTemplate.class, boredApiParameters);
+            ResponseEntity<BoredTemplate> responseEntity = restTemplate.getForEntity("http://www.boredapi.com/api/activity?participants={participants}", BoredTemplate.class, boredApiParameters);
             if (responseEntity.getStatusCode().equals(HttpStatus.OK) && responseEntity.getBody() != null) {
                 BoredTemplate boredTemplate = responseEntity.getBody();
                 System.out.println(boredTemplate);
