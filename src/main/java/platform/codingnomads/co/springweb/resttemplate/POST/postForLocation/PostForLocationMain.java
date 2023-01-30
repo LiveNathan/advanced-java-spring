@@ -7,11 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import platform.codingnomads.co.springweb.resttemplate.POST.models.ResponseObject;
-import platform.codingnomads.co.springweb.resttemplate.POST.models.Task;
-
-import java.net.URI;
-import java.util.Objects;
+import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.UserResponseObject;
+import platform.codingnomads.co.springweb.resttemplate.POST.postForObject.Models.UserTemplate;
 
 @SpringBootApplication
 public class PostForLocationMain {
@@ -26,6 +23,7 @@ public class PostForLocationMain {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
+            /* Done
             Task newTask = Task.builder()
                     .name("learn how to use postForLocation()")
                     .description("get comfortable using the RestTemplate postForLocation() method")
@@ -43,7 +41,17 @@ public class PostForLocationMain {
             ResponseEntity<?> responseEntity = restTemplate
                     .postForEntity("http://demo.codingnomads.co:8080/tasks_api/tasks", newTask, ResponseObject.class);
 
+            System.out.println(responseEntity.getHeaders().get("Location")); */
+
+            // New User
+            UserTemplate newUser = UserTemplate.builder().email("salt2@shaker.com").first_name("Salt2").last_name("Shaker").build();
+//            URI returnedLocation = restTemplate.postForLocation("http://demo.codingnomads.co:8080/tasks_api/users", newUser, UserResponseObject.class);
+//            System.out.println(Objects.requireNonNull(returnedLocation));
+
+            ResponseEntity<?> responseEntity = restTemplate.postForEntity("http://demo.codingnomads.co:8080/tasks_api/users", newUser, UserResponseObject.class);
             System.out.println(responseEntity.getHeaders().get("Location"));
+
+
         };
     }
 }
