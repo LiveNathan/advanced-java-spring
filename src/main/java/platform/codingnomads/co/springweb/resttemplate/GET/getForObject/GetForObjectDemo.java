@@ -44,7 +44,7 @@ public class GetForObjectDemo {
             System.out.println(randomActivity);
 
             // Pass parameters with Map
-            HashMap<String, Integer> boredApiParameters = new HashMap<String, Integer>();
+            HashMap<String, Integer> boredApiParameters = new HashMap<>();
             boredApiParameters.put("participants", 2);
 //            randomActivity = restTemplate.getForObject("http://www.boredapi.com/api/activity?participants=2", BoredTemplate.class, boredApiParameters);
 //            System.out.println(randomActivity);
