@@ -8,6 +8,8 @@ import platform.codingnomads.co.springweb.gettingdatafromclient.pathvariable.mod
 
 import java.util.Map;
 
+import static org.springframework.util.StringUtils.hasLength;
+
 @RestController
 @RequestMapping("/api/tasks")
 @RequiredArgsConstructor
@@ -47,6 +49,25 @@ public class TaskController {
     @GetMapping(value = "/path-variable-not-encoded/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String pathVariableIsNotEncoded(@PathVariable String name) {
         return name;
+    }
+
+    // Nathan practice
+    @GetMapping(value = "/with-map2/{long}/{string}/{double}/{boolean}")  // The double will get ignored.
+    public Task getStuff(@PathVariable Map<String, String> pathVariableMaps) {
+        return Task.builder()
+                .id(Long.valueOf(pathVariableMaps.get("long")))
+                .name(pathVariableMaps.get("string"))
+                .completed(Boolean.parseBoolean(pathVariableMaps.get("boolean")))
+                .build();
+    }
+
+    @GetMapping(value = {"/spam", "/spam/{eggs}"})
+    public String eggsOptional(@PathVariable(required = false) String eggs) {
+        if (hasLength(eggs)) {
+            return "Spam and " + eggs;
+        } else {
+            return "No eggs today.";
+        }
     }
 }
 

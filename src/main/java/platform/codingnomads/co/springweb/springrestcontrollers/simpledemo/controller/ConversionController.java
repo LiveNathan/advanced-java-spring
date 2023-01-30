@@ -25,4 +25,12 @@ public class ConversionController {
     public String returnTheString() {
         return text;
     }
+
+    @RequestMapping(path = "/backwards", method = RequestMethod.GET)
+    public String returnTheStringBackwards() {
+        StringBuilder stringBuilder = new StringBuilder(text);
+        StringBuilder stringBuilderReverse = stringBuilder.reverse();
+        String textBackwards = stringBuilderReverse.toString();
+        return textBackwards;
+    }
 }

@@ -16,6 +16,8 @@ import platform.codingnomads.co.springweb.gettingdatafromclient.handlingmultipar
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -95,6 +97,28 @@ public class HandleMultipartDataController {
                 .body(new ByteArrayResource(databaseFile.getData()));
     }
 
+    // GET file by file name
+    @GetMapping("/searchByName/{fileName}")
+    public ResponseEntity<?> searchFilesByName(@PathVariable String fileName) {
+
+        final boolean existsByFileName = fileRepository.existsByFileName(fileName);
+
+        if (!existsByFileName) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found with file name: " + fileName);
+        }
+
+        List<DatabaseFile> databaseFiles = fileRepository.findByFileName(fileName);
+
+        List<FileResponse> fileResponses = new ArrayList<>();  // Is there a more efficient way to do this?
+        for (DatabaseFile databaseFile : databaseFiles) {
+            FileResponse fileResponse = FileResponse.builder().fileName(databaseFile.getFileName())
+                    .fileType(databaseFile.getFileType()).build();
+            fileResponses.add(fileResponse);
+        }
+
+        return ResponseEntity.ok(fileResponses);
+    }
+
     //@PutMapping("/uploadSingleFile/{id}")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateFileById(@PathVariable(name = "id") Long fileId, @RequestBody MultipartFile file) {
@@ -133,6 +157,34 @@ public class HandleMultipartDataController {
                 .fileDownloadUri(savedFile.getDownloadUrl())
                 .fileType(file.getContentType())
                 .size(file.getSize())
+                .build());
+    }
+
+    // Duplicate a file and change the name
+    @GetMapping("/duplicate/{id}")
+    public ResponseEntity<?> updateFileById(@PathVariable(name = "id") Long fileId, @RequestParam(required = false, defaultValue = "newName") String newFileName) {
+
+        final Optional<DatabaseFile> optional = fileRepository.findById(fileId);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().body(new NoSuchFileException("The ID you passed in was not valid."));
+        }
+
+        DatabaseFile databaseFile = optional.get();
+        databaseFile.setFileName(newFileName);  // I removed the try block here. Not sure if that's best.
+
+        final DatabaseFile savedFile = fileRepository.save(databaseFile);
+
+        savedFile.setDownloadUrl(ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(String.valueOf(savedFile.getId()))
+                .toUriString());
+
+        return ResponseEntity.ok(FileResponse.builder()
+                .fileName(databaseFile.getFileName())
+                .fileDownloadUri(savedFile.getDownloadUrl())
+                .fileType(savedFile.getFileType())
+                //.size(file.getSize())  // I don't think we have a way to get size.
                 .build());
     }
 
