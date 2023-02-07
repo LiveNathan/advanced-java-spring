@@ -15,6 +15,15 @@ public class GreetingController {
         return "greeting"; 
     }
 
+    @GetMapping({"/practice"})
+    public String practice(Model model) {
+        model.addAttribute("fault", "tooth");
+        model.addAttribute("help", "stem");
+        model.addAttribute("trance", "squeeze");
+        return "practice";
+    }
+
+
     @GetMapping("/subjects")
     public String subjects(Model model) {
         Subject s1 = new Subject("Java", "Programming");

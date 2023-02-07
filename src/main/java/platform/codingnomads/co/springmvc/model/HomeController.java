@@ -2,7 +2,6 @@ package platform.codingnomads.co.springmvc.model;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +17,10 @@ public class HomeController {
         model.addAttribute("name", "Developer");
         model.addAttribute("language", "Java");
         model.addAttribute("framework", "Spring");
+        model.addAttribute("location", "Earth");
+        model.addAttribute("field", "Gold");
+        model.addAttribute("level", "4.7");
+        model.addAttribute("date", "Today");
         return "model-page";
     }
 
