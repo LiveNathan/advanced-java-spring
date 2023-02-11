@@ -40,4 +40,17 @@ public class CoffeePreferenceControllerTest {
         //confirm ID was assigned
         assertThat(Objects.requireNonNull(postedCoffeePreference.getBody()).getId()).isNotNull();
     }
+
+    @Test
+    public void testGetCoffeePreference() throws Exception {
+        // Send GET request using TestRestTemplate
+        ResponseEntity<CoffeePreference> coffeePreferenceResponseEntity =
+                testRestTemplate.getForEntity("/coffee/1", CoffeePreference.class);
+
+        // Confirm the ID of the returned object is correct
+        assertThat(Objects.requireNonNull(coffeePreferenceResponseEntity.getBody()).getId()).isNotNull();
+
+        // Delete the object using TestRestTemplate
+        testRestTemplate.delete("/coffee/1");  // This is not working for some reason.
+    }
 }
