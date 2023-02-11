@@ -148,13 +148,13 @@ public class RecipeControllerUnitTest {
                                 .minutesToMake(1)
                                 .difficultyRating(10)
                                 .ingredients(Set.of(Ingredient.builder()
-                                            .id(1L).name("mock sauce")
-                                            .state("saucy")
-                                            .amount("lots").build()))
+                                        .id(1L).name("mock sauce")
+                                        .state("saucy")
+                                        .amount("lots").build()))
                                 .steps(Set.of(Step.builder()
-                                            .id(1L)
-                                            .stepNumber(1)
-                                            .description("mock the mock sauce").build()))
+                                        .id(1L)
+                                        .stepNumber(1)
+                                        .description("mock the mock sauce").build()))
                                 .build())
                 )
         );
@@ -217,8 +217,8 @@ public class RecipeControllerUnitTest {
         when(recipeService.createNewRecipe(any(Recipe.class))).thenReturn(recipe);
 
         mockMvc.perform(post("/recipes")
-                            .contentType("application/json")
-                            .content(TestUtil.convertObjectToJsonBytes(recipe))
+                        .contentType("application/json")
+                        .content(TestUtil.convertObjectToJsonBytes(recipe))
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "http://thisIsALink.com/1"))
@@ -241,12 +241,12 @@ public class RecipeControllerUnitTest {
 
         //force failure with empty User object
         mockMvc.perform(
-                post("/recipes")
-                        //set body equal to empty recipe object
-                        .content(TestUtil.convertObjectToJsonBytes(Recipe.builder().build()))
-                        //set Content-Type header
-                        .contentType("application/json")
-        )
+                        post("/recipes")
+                                //set body equal to empty recipe object
+                                .content(TestUtil.convertObjectToJsonBytes(Recipe.builder().build()))
+                                //set Content-Type header
+                                .contentType("application/json")
+                )
                 //confirm status code 400 BAD REQUEST
                 .andExpect(status().isBadRequest())
                 //confirm the body only contains a String
@@ -289,9 +289,9 @@ public class RecipeControllerUnitTest {
         when(recipeService.updateRecipe(any(Recipe.class), eq(true))).thenReturn(recipe);
 
         mockMvc.perform(patch("/recipes")
-                            .contentType("application/json")
-                            .content(TestUtil.convertObjectToJsonBytes(recipe))
-                        )
+                        .contentType("application/json")
+                        .content(TestUtil.convertObjectToJsonBytes(recipe))
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json(TestUtil.convertObjectToJsonString(recipe)));
@@ -305,7 +305,7 @@ public class RecipeControllerUnitTest {
         mockMvc.perform(patch("/recipes")
                         .contentType("application/json")
                         .content(TestUtil.convertObjectToJsonBytes(Recipe.builder().build()))
-                    )
+                )
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType("text/plain;charset=UTF-8"))
                 .andExpect(content().string("found in body?"));
@@ -315,9 +315,9 @@ public class RecipeControllerUnitTest {
                 .thenThrow(new IllegalStateException("found in body?"));
 
         mockMvc.perform(patch("/recipes")
-                .contentType("application/json")
-                .content(TestUtil.convertObjectToJsonBytes(Recipe.builder().build()))
-        )
+                        .contentType("application/json")
+                        .content(TestUtil.convertObjectToJsonBytes(Recipe.builder().build()))
+                )
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType("text/plain;charset=UTF-8"))
                 .andExpect(content().string("found in body?"));
