@@ -19,4 +19,14 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
     }
+
+    @Override
+    public void deleteAllMovies() {
+        movieRepository.deleteAll();
+    }
+
+    @Override
+    public List<Movie> getAllMoviesWithMinimumRating(Double minRating) {
+        return movieRepository.findByRatingGreaterThanEqual(minRating);
+    }
 }
