@@ -30,7 +30,7 @@ public interface LessonMapper {
                     javaType = List.class,
                     property = "imageArrayList",
                     many = @Many(
-                            select = "com.bensiegler.mappers.ImageMapper.getImagesByLessonId"
+                            select = "platform.codingnomads.co.springdata.example.mybatis.extraexample.mappers.ImageMapper.getImagesByLessonId"
                     )
             )
     )
