@@ -10,6 +10,8 @@ import platform.codingnomads.co.springsecurity.authorization.addingauthorization
 import platform.codingnomads.co.springsecurity.authorization.addingauthorization.models.UserPrincipal;
 import platform.codingnomads.co.springsecurity.authorization.addingauthorization.services.CustomUserService;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -24,7 +26,13 @@ public class UserController {
     @GetMapping("/current-user")
     public UserMeta getUser(Authentication authentication) {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        userDetailsService.printSomething(principal.getId());  // Testing my @PreAuthorize annotation
         return principal.getUserMeta();
+    }
+
+    @GetMapping("/all-users")
+    public List<UserMeta> getAllUsers() {
+        return userDetailsService.getAllUsers();
     }
 
     /*

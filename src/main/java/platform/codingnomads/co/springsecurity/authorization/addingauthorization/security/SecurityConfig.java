@@ -3,6 +3,7 @@ package platform.codingnomads.co.springsecurity.authorization.addingauthorizatio
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity(debug = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -26,7 +28,7 @@ public class SecurityConfig {
                         //make sure that the admin page can only be accessed user with ROLE_ADMIN
                         .antMatchers("/admin", "/banana").hasRole("ADMIN")
                         //only allow users with ROLE_SUPERU to access the super user page
-                        .antMatchers("/superu", "/apple").hasRole("SUPERU")
+                        .antMatchers("/superu").hasRole("SUPERU")
                         //only allow users with ROLE_USER to access the orange page
                         .antMatchers("/orange").hasRole("USER")
                         //only allow users with an UPDATER authority to update users.

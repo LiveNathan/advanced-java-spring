@@ -4,6 +4,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.annotation.security.RolesAllowed;
+
 @Controller
 public class HomeController {
 
@@ -36,6 +38,7 @@ public class HomeController {
         return "authorization/banana";
     }
 
+    @RolesAllowed("SUPER_USER")
     @GetMapping("/apple")
     public String applePage() {
         return "authorization/apple";
