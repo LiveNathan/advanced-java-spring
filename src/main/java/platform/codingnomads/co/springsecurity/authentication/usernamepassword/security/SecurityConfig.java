@@ -32,7 +32,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         //CSS should always be accessible for all
-        return (web) -> web.ignoring().antMatchers("/css/**");
+        return (web) -> web.ignoring().antMatchers("/css/**", "/error");
     }
 
     @Bean

@@ -40,7 +40,7 @@ public class AuthorizationDemo implements CommandLineRunner {
         Authority updaterAuth = Authority.builder().authority(AuthorityEnum.UPDATER).build();
 
         if (authorityRepo.findAll().isEmpty()) {
-            authorityRepo.saveAll(Arrays.asList(userAuth,adminAuth, superUAuth, updaterAuth));
+            authorityRepo.saveAll(Arrays.asList(userAuth, adminAuth, superUAuth, updaterAuth));
         }
 
         UserMeta superUser = UserMeta.builder().name("super user").email("superuser@email.com").build();

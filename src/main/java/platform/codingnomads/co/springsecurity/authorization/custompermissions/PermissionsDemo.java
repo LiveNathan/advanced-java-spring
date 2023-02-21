@@ -45,6 +45,7 @@ public class PermissionsDemo implements CommandLineRunner {
 
         if (authRepository.findAll().isEmpty()) {
             authRepository.save(new MyGrantedAuthority(user1.getClass().getTypeName(), user1.getId(), "READ"));
+//            authRepository.save(new MyGrantedAuthority(user1.getClass().getTypeName(), user2.getId(), "READ"));
             authRepository.save(new MyGrantedAuthority(user1.getClass().getTypeName(), user1.getId(), "DELETE"));
             authRepository.save(new MyGrantedAuthority(user2.getClass().getTypeName(), user2.getId(), "READ"));
             authRepository.save(new MyGrantedAuthority(user2.getClass().getTypeName(), user2.getId(), "DELETE"));
