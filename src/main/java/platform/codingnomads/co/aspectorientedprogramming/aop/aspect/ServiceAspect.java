@@ -26,6 +26,12 @@ public class ServiceAspect {
         LOGGER.info("Before the execution of : " + joinPoint.getSignature());
     }
 
+    @Before("execution(* platform.codingnomads.co.aspectorientedprogramming.aop.service.StudentService.saveStudent())")
+    public void logSaveStudentMethod(JoinPoint joinPoint) {
+        // write any custom logic according to business requirement
+        LOGGER.info("Before the execution of : " + joinPoint.getSignature());
+    }
+
     @After("logAllStudentServiceMethods()")
     public void logAfterAdvice(JoinPoint joinPoint) {
         LOGGER.info("After Advice: " + joinPoint.getSignature().getName());
