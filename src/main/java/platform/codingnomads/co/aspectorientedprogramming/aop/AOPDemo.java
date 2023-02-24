@@ -31,5 +31,9 @@ public class AOPDemo implements CommandLineRunner {
         ));
 
         studentService.fetchAllStudents();
+
+        studentService.saveStudent(Student.builder().email("student4@example.com").name("student4").build());
+        studentService.saveStudent(Student.builder().email("student5@example.com").name("student5").build());
+        studentService.saveStudent(Student.builder().email("student6@example.com").name("student6").build());
     }
 }
